@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block head%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style/index.css') }}"/>
+{% endblock %}
+
+{% block body %} 
+    <div class="homepage">
+        <div class="intro-block">
+            <div class="title-block">
+                <h1 id="title">Chats<span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+            </div>
+            <div class="chat-div">
+                <button id="new-message-button" onclick="newMessageGroup()">
+                    <span class="material-symbols-outlined">chat_add_on</span>
+                </button>
+                <div class="new-group-box">
+
+
+                </div>
+                <ul class="chatlist">
+                    {% for chat in chats %}
+                        <li><a href="/home/{{chat['group_id']}}">{{ chat["user_names"] }}</a></li>
+                    {% endfor %}
+                </ul>    
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

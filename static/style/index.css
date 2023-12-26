@@ -1,0 +1,132 @@
+.homepage {
+    display: flex;
+    flex-direction: column;
+    margin: auto clamp(.25rem, .25rem + 2vw, 3rem);
+    height: 800px;
+
+}
+
+.homepage > * {
+    margin: 1rem auto;
+}
+
+@media(min-width: 1000px) {
+    .homepage {
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 2em;
+    }
+
+    .homepage > * {
+        flex: 0 1 40%;
+        align-self: top center;
+    }
+
+}
+
+.intro-block {
+    position: relative;
+    background-color: #21232A;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 1em;
+}
+
+.title-block h1 {
+    font-family: grandstander;
+    font-size: clamp(.75rem, .75rem + 2vw, 2rem);
+    align-items: center;
+}
+
+.title-block h1 span {
+    color: green;
+}
+
+.title-block p {
+   font-family: grandstander;
+   font-size: clamp(.3rem, .3rem + 2vw, 1rem);
+    line-height: 1.5em;
+}
+
+table {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    color: black;
+  }
+  
+ table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  table tr:nth-child(even){background-color: #f2f2f2;}
+  
+  table tr:hover {background-color: #ddd;}
+  
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #1789e5;
+    color: white;
+}
+
+table tr:nth-child(odd) {
+    background-color: #f2f2f2;
+    color: #21232A;
+}
+
+table tr:nth-child(odd) a{
+    background-color: #f2f2f2;
+    color: #21232A;
+}
+table tr:nth-child(even) {
+    background-color: #ddd;
+    color: #21232A;
+}
+
+table tr:nth-child(even) a{
+    background-color: #ddd;
+    color: #21232A;
+}
+  
+table tr:hover {
+    background-color: #21232A;
+    color: white;
+}
+
+table tr:hover a {
+    background-color: #21232A;
+    color: white;
+}
+
+.chatlist {
+    list-style: none;
+}
+
+.chat-div {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+
+#new-message-button {
+    top: 2%;
+    right: 5%;
+    position: absolute;
+}
+
+.chatlist li {
+    background-color: transparent;
+}
+
+.chatlist li a {
+    background-color: transparent;
+    border: 0;
+    color: white;
+}
