@@ -63,3 +63,49 @@ def get_auth_account(token):
         return None
 
 
+def get_account(request):
+        """Pulls a user account from the datatables
+
+        Takes in an http request and uses it to determine the user account based off the auth token passed in the request
+
+        Keyword Arguements:
+        request -- http request containing a cookie named token which contains an authentication token
+
+        Return: UserAccount object
+        """
+
+        token = request.cookies.get("token")
+        if token != None:
+            try:
+                auth_account = get_auth_account(token)
+                if auth_account != None:
+                    account = db.session.execute(db.select(UserAccount).filter_by(auth_account_id=auth_account.id)).scalar_one()
+                    if account != None:
+                        account.set_auth(auth_account)
+                        account.admin_flag = permission_validation("Admin", account.id)
+                        if account.account_image_link != None:
+                            image_id = account.account_image_link
+                            account.image_flag = True
+                            try:
+                                int(image_id)
+                            except:
+                                image_id = 1
+                        else:
+                            image_id = 1
+
+                            account.image_flag = False
+                        image_obj = FileContent.query.get_or_404(image_id)
+                        account.profile_img_loc = image_obj.location
+                        account.profile_img_data = image_obj.rendered_data
+                    else:
+                        return UserAccount(full_name="No Account")
+                else:
+                    return UserAccount(full_name="No Account")
+                
+                return account
+            
+            except (NoResultFound, OperationalError):
+                return UserAccount(full_name="No Account")
+        else:
+            return UserAccount(full_name="No Account")
+
