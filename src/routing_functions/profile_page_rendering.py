@@ -93,3 +93,16 @@ class ProfilePageRendering():
         except NoResultFound: 
             return redirect("/signin/failed")
     
+    def sign_out():
+        """View function that handles a sign out attempt
+
+        Function signs out current user by setting auth token cookie to None
+
+        Return: Response that redirects to home path 
+
+        """
+
+        response = make_response(redirect("/"))
+        response.set_cookie("token", "None")
+        return response
+
