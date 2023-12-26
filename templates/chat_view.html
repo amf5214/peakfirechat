@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block head%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style/chat_view.css') }}"/>
+{% endblock %}
+
+{% block body %} 
+    <div class="homepage">
+        <div class="intro-block" id="item-5">
+            <div class="title-block">
+                <h1 id="title">Chat<span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+
+                <h2 id="user-names">{{ chat["user_names"] }}</h2>
+            </div>
+            <button id="new-message-button" onclick="newMessageGroup()">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+            <div class="add-people">
+
+
+            </div>
+            <div class="chat-div">
+                <div class="chat-view">
+                    {% for message in chat["messages"] %}
+                        {% if message.sender == useraccount.id %}
+                            <section class="rightMessage">
+                        {% else %}
+                            <section class="leftMessage">
+                        {% endif %}
+                                <p class="sender_name">{{ message.sender_name }}</p>
+                            {% if message.sender == useraccount.id %}
+                                <span class="rightBubble">
+                            {% else %}
+                                <span class="leftBubble">
+                            {% endif %}
+                                {{ message.text }}
+                                </span>
+                            </section>
+                    {% endfor %}
+
+                </div>    
+            </div>
+            <form method="post" class="new-message-box" action="/newmessage" enctype="multipart/form-data">
+                <input type="hidden" class="user-id" id="user-id" name="user-id" value="{{ useraccount.id }}">
+                <input type="hidden" class="group-id" id="group-id" name="group-id" value="{{ group_id }}">
+                <input class="message-text" id="message-text" name="message-text">
+                <input id="new-message" type="submit" class="material-symbols-outlined" value="send">
+            </form>
+        </div>
+    </div>
+{% endblock %}
