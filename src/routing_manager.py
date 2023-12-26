@@ -19,3 +19,19 @@ def configure_routing(app):
 
     Return: None
     """
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        # note that we set the 404 status explicitly
+        return render_template('jumping.html', useraccount=get_account(request)), 404
+
+    @app.route('/404')
+    def error_404():
+        return render_template('jumping.html', useraccount=get_account(request)), 404
+
+    @app.route('/')
+    def go_home():
+        user = get_account(request)
+        chats = get_chats_for_user(user.id)
+        return render_template('index.html', useraccount=user, chats=chats)
+    
