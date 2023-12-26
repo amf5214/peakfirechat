@@ -24,3 +24,14 @@ class ProfilePageRendering():
 
         return render_template('signinup.html', useraccount=get_account(request))
 
+    def failed_signin():
+        """View function that renders the signin/signup page with error message due to a failed sign in
+
+        Renders the page used to sign in and sign up for an account but adds the error message variable due to a failed sign in attempt
+
+        Return: Rendered view from signinup.html template with js and css code 
+
+        """
+
+        return render_template('signinup.html', message="Username/Password Invalid. Please try again.", useraccount=get_account(request))
+
