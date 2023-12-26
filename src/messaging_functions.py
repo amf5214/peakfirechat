@@ -25,3 +25,17 @@ def get_messages_by_group(group_id):
             message.sender_name = message.sender
     return messages_sent
 
+def get_users_in_group(group_id):
+    subscribers = db.session.execute(db.select(MessageGroupSubscription).filter_by(group=group_id)).scalars()
+    ids = [x.subscriber for x in subscribers]
+    subscriber_accounts = db.session.execute(db.select(UserAccount).filter(UserAccount.id.in_(ids))).scalars()
+    accounts = [[x.full_name, x.id] for x in subscriber_accounts]
+    names = [x[0] for x in accounts]
+    rtn_string = ""
+    for i, x in enumerate(names):
+        if i != len(names) - 1:
+            rtn_string += (x +  ", ")
+        else:
+            rtn_string += x
+    return accounts, rtn_string
+
