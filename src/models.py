@@ -66,3 +66,22 @@ class PermissionsRequest(db.Model):
     def __repr__(self):
         return f"<AccountPermission Request {self.id}>"
     
+class AuthAccount(db.Model):
+    """Model representing the AuthAccount table
+
+    Holds data on every row of the AuthAccount table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+
+    id = db.Column(db.Integer, primary_key=True)
+    email_account = db.Column(db.String(100), unique=True)
+    hash_password = db.Column(db.String(1000))
+    auth_token = db.Column(db.String(1000))
+    token_key = db.Column(db.Text(4294967295))
+
+    def __repr__(self):
+        return f"<AuthAccount {self.id}>"
+
