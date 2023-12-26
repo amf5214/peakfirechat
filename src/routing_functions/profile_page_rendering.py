@@ -12,3 +12,15 @@ class Permission():
             self.has=has
             self.name=name
 
+class ProfilePageRendering():
+    def signin():
+        """View function that renders the signin/signup page
+
+        Renders the page used to sign in and sign up for an account
+
+        Return: Rendered view from signinup.html template with js and css code 
+
+        """
+
+        return render_template('signinup.html', useraccount=get_account(request))
+
