@@ -35,3 +35,15 @@ def configure_routing(app):
         chats = get_chats_for_user(user.id)
         return render_template('index.html', useraccount=user, chats=chats)
     
+    @app.route('/home/<int:group_id>')
+    def chat_view(group_id):
+        accounts = get_users_in_group(group_id)[0]
+        accounts = [x[1] for x in accounts]
+        user = get_account(request)
+        if int(user.id) in accounts:
+            chat = get_group_data(group_id)
+            return render_template('chat_view.html', useraccount=user, chat=chat, group_id=group_id)
+        else:
+            return redirect('/')
+        
+    
