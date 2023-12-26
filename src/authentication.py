@@ -40,3 +40,26 @@ def validate_password(given_pass, real_pass):
 
     return sha256_crypt.verify(given_pass, real_pass)
 
+def get_auth_account(token):
+    """Pulls an authentication account from the datatables
+
+    Takes in a string representing the encoded jwt and decodes it using the stored secret key to access the expiration date and compare it. 
+    For the token to still be valid, the delta of the expiration date and now should be negative, otherwise None will be returned
+
+    Keyword Arguements:
+    token -- string representing encoded jwt token
+
+    Return: AuthAccount object
+    """
+
+    auth_account = db.session.execute(db.select(AuthAccount).filter_by(auth_token=token)).scalar_one()
+    if auth_account:
+        try:
+            jwt.decode(token, key=auth_account.token_key, algorithms=["HS256"])
+            return auth_account
+        except jwt.ExpiredSignatureError:
+            return None
+    else:
+        return None
+
+
