@@ -36,3 +36,14 @@ class AdminPageRendering():
         image_id = uploadimage(request)
         return redirect('/')
 
+    def adminuploadimage():
+        if not check_if_admin(request):
+            return redirect('/')
+        useraccount = get_account(request)
+        test = permission_validation("Admin", useraccount.id)
+        if test:
+            return render_template('uploadimage.html', useraccount=useraccount, baseimage=create_image_item(1))
+        else:
+            return redirect('/')
+
+    
