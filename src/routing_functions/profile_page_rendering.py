@@ -7,3 +7,8 @@ from src.models import AuthAccount, UserAccount, db
 
 Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
 
+class Permission():
+        def __init__(self, has, name):
+            self.has=has
+            self.name=name
+
