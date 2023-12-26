@@ -83,4 +83,5 @@ def configure_routing(app):
     app.add_url_rule('/requestpermission/<permission>/<accountid>', view_func=ProfilePageRendering.create_permission_request)
     app.add_url_rule('/profileimageupdate', methods=['POST'], view_func=ProfilePageRendering.profileimageupdate)
     app.add_url_rule('/updateprofileattribute', methods=['POST'], view_func=ProfilePageRendering.updateprofileattribute)
+
     
