@@ -122,3 +122,23 @@ class MessageGroup(db.Model):
     def __repr__(self):
         return f"<MesageGroup {self.id}>"
     
+class Message(db.Model):
+    """Model representing the Message table
+
+    Holds data on every row of the Message table
+
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+
+    id = db.Column(db.Integer,  primary_key=True)
+    sender = db.Column(db.Integer)
+    group = db.Column(db.Integer)
+    is_visible = db.Column(db.Integer, default=1)
+    text = db.Column(db.Text)
+    datetime_sent = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+
+    def __repr__(self):
+        return f"<Mesage {self.id}>"
+    
