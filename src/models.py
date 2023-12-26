@@ -105,3 +105,20 @@ class FileContent(db.Model):
     def __repr__(self):
         return f"<FileContent {self.id}>"
     
+class MessageGroup(db.Model):
+    """Model representing the MessageGroup table
+
+    Holds data on every row of the MessageGroup table
+
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+
+    id = db.Column(db.Integer,  primary_key=True)
+    participants = db.Column(db.Text)
+    is_visible = db.Column(db.Integer, default=1)
+
+    def __repr__(self):
+        return f"<MesageGroup {self.id}>"
+    
