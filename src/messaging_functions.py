@@ -39,3 +39,7 @@ def get_users_in_group(group_id):
             rtn_string += x
     return accounts, rtn_string
 
+def get_group_data(group_id):
+    user_data = get_users_in_group(group_id)
+    return {"users": user_data[0], "messages": get_messages_by_group(group_id), "user_names": user_data[1], "group_id": group_id}
+
