@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style/profile.css') }}" /> 
+    <title>{{ useraccount.full_name }}</title>
+{% endblock%}
+
+{% block body%}
+    <div class="page-content-profile">
+        <div class="intro-block">
+            <div class="title-block" id="profile-item">
+                <h1 class="site-purpose">
+                    Profile<span class="material-symbols-outlined">rocket_launch</span>
+                </h1>
+                <form method="post" action="/profileimageupdate" id="profileimageform" enctype="multipart/form-data">
+                    <input type="text" hidden name="user_id" value="{{ useraccount.id }}" text="{{ useraccount.id }}">
+                    <div class="intro-block">
+                        <label id="drop-area">
+                            <input type="file" value="" text="" name="file" accept="image/*" hidden id="input-file">
+                            <div id="img-view">
+                                <img src="data:image/{{useraccount.profile_img_loc}};base64,{{ useraccount.profile_img_data }}" class="topimage">
+                            </div>
+                        </label>
+                    </div>
+                </form>
+
+                <p class="site-purpose account-attribute" id="user-name-{{ useraccount.id }}" contenteditable="true">Name: {{ useraccount.full_name }}</p>
+                <p class="site-purpose account-attribute" id="user-username-{{ useraccount.id }}" contenteditable="true">Username: {{ useraccount.username }}</p>
+                <p class="site-purpose">Email: {{ useraccount.auth.email_account }}</p>
+                <p class="site-purpose account-attribute" id="user-birthdate-{{ useraccount.id }}" contenteditable="true">Birthdate: {{ useraccount.birthdate.month }}/{{ useraccount.birthdate.day }}/{{ useraccount.birthdate.year }}</p>
+                <div class="permissions">
+                    <table>
+                        <tr>
+                            <td><p>Permissions:</p></td>
+                            {% for permission in permissions %}
+                                {% if permission.has == True %}
+                                    <td><p class="hasit">{{ permission.name }}<span class="material-symbols-outlined">check</span></p></td>
+                                {% else %}
+                                    <td><p class="doesnthaveit"><a href="/requestpermission/{{permission.name}}/{{useraccount.id}}">{{ permission.name }}<span class="material-symbols-outlined">close</span></a></p></td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="user-details">
+            <div class="intro-block">
+                <div class="title-block">
+                    <h1 id="title">
+                        Bio<span class="material-symbols-outlined">rocket_launch</span>
+                    </h1>
+                    <p class="site-purpose account-attribute" id="user-bio-{{ useraccount.id }}" contenteditable="true">{{ useraccount.bio }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="intro-block">
+                <div class="title-block">
+                    <h1 id="title">
+                        My Experience<span class="material-symbols-outlined">rocket_launch</span>
+                    </h1>
+                    <p class="site-purpose account-attribute" id="user-experience-{{ useraccount.id }}" contenteditable="true">{{ useraccount.experience }}
+                    </p>
+                </div>
+            </div>
+        
+    </div>
+    <script src="static/script/profile.js"></script>
+    <script src="static/script/profile_modification.js"></script>
+{% endblock %}
