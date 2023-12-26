@@ -65,3 +65,31 @@ class ProfilePageRendering():
 #     return render_template("introduction.html", useraccount=get_account(request))
 
 
+    def signinattempt():
+        """View function that handles a sign in attempt
+
+        Takes a post request in the form of an html form submission. If the signin works then user redirected to home path
+        otherwise user will be redirected to failed sign in path.
+
+        Return: Redirect object that moves the user to the correct page based off accuracy of the submitted form 
+        
+        """
+
+        try:
+            given_pass = request.form["logpass"]
+
+            auth_account = db.session.execute(db.select(AuthAccount).filter_by(email_account=request.form["logemail"])).scalar_one()
+
+            if(validate_password(given_pass, auth_account.hash_password)):
+                token_data = encode_auth_token(request.form["logemail"])
+                auth_account.auth_token = token_data[0]
+                auth_account.token_key = token_data[1]
+                db.session.commit()
+                response = make_response(redirect("/"))
+                response.set_cookie("token", auth_account.auth_token)
+                return response
+            else:
+                return redirect("/signin/failed")
+        except NoResultFound: 
+            return redirect("/signin/failed")
+    
