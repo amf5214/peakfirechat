@@ -5,6 +5,8 @@ import configparser
 import secrets
 
 from src.models import *
+from src.authentication import *
+from src.routing_manager import configure_routing
 
 app = Flask(__name__)
 
@@ -27,6 +29,8 @@ with app.app_context():
         
     except OperationalError as e:
         print(e)
+
+    configure_routing(app)
 
 
 if __name__ == "__main__":
