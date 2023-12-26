@@ -16,6 +16,22 @@ from sqlalchemy import create_engine
 import pymysql
 
 from src.models import FileContent, db
+
+
+def create_src(file):
+    """Adds src attribute to filecontent object representing html img src value to display image
+
+    Accepts FileContent object and adds the src attribute which represents the src value of an html img tag.
+    This allows the attribute to be directly plugged into an html template within an html tag src value
+
+    Keyword Arguements:
+    file -- FileContent object
+
+    Return: None
+
+    """
+    file.src = f"data:image/{file.location};base64,{file.rendered_data}"        
+        
 def create_image(id):
     """Creates image_item object for a FileContent item
 
