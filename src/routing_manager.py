@@ -46,4 +46,22 @@ def configure_routing(app):
         else:
             return redirect('/')
         
+    @app.route('/newmessage', methods=['POST'])
+    def new_message():
+        group_id = request.form["group-id"]
+        accounts = get_users_in_group(group_id)[0]
+        accounts = [x[1] for x in accounts]
+        user = get_account(request)
+        if int(user.id) in accounts:
+            new_message = Message(sender=user.id, group=group_id, text=request.form["message-text"], is_visible=1)
+            try:
+                db.session.add(new_message)
+                db.session.commit()
+                return redirect(f'/home/{group_id}')
+            except Exception as e:
+                print(e)
+                return redirect(f'/home/{group_id}')
+        else:
+            return redirect('/')
+
     
