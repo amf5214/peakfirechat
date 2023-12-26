@@ -85,3 +85,23 @@ class AuthAccount(db.Model):
     def __repr__(self):
         return f"<AuthAccount {self.id}>"
 
+class FileContent(db.Model):
+    """Model representing the FileContent table
+
+    Holds data on every row of the FileContent table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+
+    id = db.Column(db.Integer,  primary_key=True)
+    name = db.Column(db.String(128), nullable=False)
+    rendered_data = db.Column(db.Text(4294967295), nullable=False) #Data to render the pic in browser
+    text = db.Column(db.Text)
+    location = db.Column(db.String(64))
+    pic_date = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+
+    def __repr__(self):
+        return f"<FileContent {self.id}>"
+    
