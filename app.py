@@ -4,10 +4,29 @@ import os
 import configparser
 import secrets
 
+from src.models import *
+
 app = Flask(__name__)
 
 with app.app_context():
-    pass
+    db_config_file = 'auth/database_config.ini'
+    if os.path.isfile(db_config_file):
+        config = configparser.ConfigParser()
+        config.read(db_config_file)
+        app.config["SQLALCHEMY_DATABASE_URI"] = config['MariaDB_Config']['connection_string']
+    else:
+        app.config["SQLALCHEMY_DATABASE_URI"] = 'mariadb+pymysql://db:pasword@mariadb.cloudclusters.net:1000/prod?charset=utf8mb4'
+        
+    app.config["SECRET_KEY"] = secrets.token_hex(30)
+
+
+    db.init_app(app)
+
+    try:
+        db.create_all()
+        
+    except OperationalError as e:
+        print(e)
 
 
 if __name__ == "__main__":
