@@ -156,3 +156,21 @@ class ProfilePageRendering():
         db.session.commit()
         return redirect('/profile')
 
+    def profileimageupdate():
+        """View function that handles a request to update a user's profile image
+
+        Function that handles a request to update a user's profile picture. Accepts a 
+        post request in the form of an html form submission. Utilizes uploadimage function 
+        from image_handling module.
+
+        Return: Redirect to the profile page
+
+        """
+
+        image_id = uploadimage(request)
+        picture_account = UserAccount.query.get_or_404(request.form["user_id"])
+
+        picture_account.account_image_link = str(image_id)
+        db.session.commit()
+        return redirect("/profile")
+    
