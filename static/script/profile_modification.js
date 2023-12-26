@@ -32,3 +32,6 @@ function addListener(element) {
     })
 }
 
+for(let attribute of userAttributes) {
+    addListener(attribute);
+}
