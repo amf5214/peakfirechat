@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+.vscode/
+logging/
+database_config.ini
+test_code/
+.ipynb_checkpoints/
+.DS_Store
