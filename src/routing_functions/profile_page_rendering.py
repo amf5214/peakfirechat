@@ -137,3 +137,22 @@ class ProfilePageRendering():
         db.session.commit()
         return redirect('/signin/home')
 
+    def create_permission_request(permission, accountid):
+        """View function that handles the creation of a permissions request
+
+        Function that handles the creation of permission request.
+
+        Keyword Arguement:
+        permission -- string representing requested permission
+        accountid -- integer representing user account id
+
+        Return: Redirect to the profile page
+
+        """
+
+        account = UserAccount.query.get_or_404(accountid)
+        request = PermissionsRequest(account_id=accountid, permission_type=permission, username=account.username, grant_date=date.today())
+        db.session.add(request)
+        db.session.commit()
+        return redirect('/profile')
+
