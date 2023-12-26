@@ -109,3 +109,11 @@ def get_account(request):
         else:
             return UserAccount(full_name="No Account")
 
+def permission_validation(permission, accountid):
+    user_perms = db.session.execute(db.select(AccountPermission).filter_by(account_id=accountid)).scalars()
+    for permissionx in user_perms:
+        if permissionx.permission_type == permission:
+            return True
+    
+    return False
+
