@@ -142,3 +142,20 @@ class Message(db.Model):
     def __repr__(self):
         return f"<Mesage {self.id}>"
     
+class MessageGroupSubscription(db.Model):
+    """Model representing the MessageGroupSubscription table
+
+    Holds data on every row of the MessageGroupSubscription table
+
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+
+    id = db.Column(db.Integer,  primary_key=True)
+    subscriber = db.Column(db.Integer)
+    group = db.Column(db.Integer)
+    is_visible = db.Column(db.Integer, default=1)
+
+    def __repr__(self):
+        return f"<MessageGroupSubscription {self.id}>"
