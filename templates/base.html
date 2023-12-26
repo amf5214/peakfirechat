@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style/main.css') }}"/> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=VT323">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Grandstander">
+        <title>Peak Fire Chat</title>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'icon.ico') }}">
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <div id="toolbar-page">
+            <div class="topbanner">
+                <div class="leftmenu">
+                    <input type="button" class="menubutton material-symbols-outlined" value="Menu" onClick="location.href='#hidden-menu'">
+                    <div id="hidden-menu">
+                        <div class="hidden-menu-items">
+                            <div class="menu-items">
+                                <button class="menubutton" onClick="location.href='#body'"><span class="material-symbols-outlined">Menu</span></button>
+                            </div>
+                            {% if useraccount.full_name!="No Account"%}
+                                <img id="image-of-me" src="data:image/{{useraccount.profile_img_loc}};base64,{{ useraccount.profile_img_data }}" alt="Me">
+                                {% if useraccount.username != None and useraccount.username != "" %}
+                                    <label id="image-of-me-label"><a href="/profile">{{ useraccount.username }}</a></label>
+                                {% else %}
+                                    <label id="image-of-me-label"><a href="/profile">{{ useraccount.full_name }}</a></label>
+                                {% endif %}
+                            {% endif %}
+                            <a class="menu-items" href="/">Home</a>
+                            <a class="menu-items" href="/chats">Chats</a>
+                            <a class="menu-items" href="/aboutus">About Us</a>
+                            <a class="menu-items" href="/contactus">Contact Us</a>
+                            {% if useraccount.admin_flag == True %}
+                                <a class="menu-items" href="/permissions/requests/admin">Perm Requests</a>
+                                <a class="menu-items" href="/admin/uploadimage">Image Upload</a>
+                            {% endif %}
+                            {% if useraccount.full_name!="No Account"%}
+                            <a class="menu-items" href="/signout">Sign Out</a>
+                            {% else %}
+                            <a class="menu-items" href="/signin/home">Sign In</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="toplogobox">
+                <button onClick="location.href='/'" id="homebutton" class="logobutton" >
+                   <span class="material-symbols-outlined" style="color: white;">home</span>
+                </button>
+                <section id="tagname">Peak Fire Chat</section>
+            </div>
+            <div class="topbanner">
+                <nav class="nav__link">
+                    <div class="searchbox">
+                        <input id="chat-button" type="button" class="material-symbols-outlined" value="search">
+                        <div class="searcharea">
+                            <div class="searchbar">
+                                <input id="search-box-input" type="search" placeholder="Search anything", autocomplete="off">
+                            </div>
+                            <div class="result-box">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        {% block body %}{% endblock %}
+        <div class="footer">
+            <span class="about">Peak Fire Chat is maintained by PeakFire1 and AMF5214</span>
+        </div>
+    </body>
