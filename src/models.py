@@ -46,3 +46,23 @@ class AccountPermission(db.Model):
     def __repr__(self):
         return f"<AccountPermission {self.id}>"
     
+class PermissionsRequest(db.Model):
+    """Model representing the PermissionsRequest table
+
+    Holds data on every row of the PermissionsRequest table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50))
+    permission_type = db.Column(db.String(50))
+    account_id = db.Column(db.Integer)
+    grant_date = db.Column(db.Date)
+    is_visible = db.Column(db.Integer, default=1)
+
+    def __repr__(self):
+        return f"<AccountPermission Request {self.id}>"
+    
