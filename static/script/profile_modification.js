@@ -16,3 +16,19 @@ function getIdValues(element) {
     return {attribute: parts.at(1), accountId: parseInt(parts.at(2)), newValue: newValue}
 }
 
+function addListener(element) {
+    element.addEventListener("focusout", function() {
+        let elementInfo = getIdValues(element);  
+        fetch("/updateprofileattribute", {
+            method: "POST",
+            body: JSON.stringify(elementInfo),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then((response) => response.json())
+        .then((data) => {
+            console.log(data.fulfillable);
+        })  
+    })
+}
+
