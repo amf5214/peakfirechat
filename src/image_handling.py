@@ -16,6 +16,26 @@ from sqlalchemy import create_engine
 import pymysql
 
 from src.models import FileContent, db
+def create_image(id):
+    """Creates image_item object for a FileContent item
+
+    Accepts integer representing FileContent id and creates an image_item object for it
+
+    Keyword Arguements:
+    id -- integer representing FileContent id 
+
+    Return: image_item object
+
+    """
+
+    try:
+        id = int(id)
+    except: 
+        return redirect('/404')
+    image = FileContent.query.get_or_404(id)
+    create_src(image)
+    return image
+
 def save_item(request):
         """Function to save a file in the local directory
 
