@@ -27,3 +27,22 @@ class UserAccount(db.Model):
     
     def set_auth(self, auth_account):
         self.auth = auth_account
+
+class AccountPermission(db.Model):
+    """Model representing the AccountPermission table
+
+    Holds data on every row of the AccountPermission table
+    
+    Parent Classes:
+    db.Model -- Model class from the database which provides access to the database schema 
+
+    """
+
+    id = db.Column(db.Integer, primary_key=True)
+    permission_type = db.Column(db.String(50))
+    account_id = db.Column(db.Integer)
+    grant_date = db.Column(db.Date)
+
+    def __repr__(self):
+        return f"<AccountPermission {self.id}>"
+    
