@@ -17,3 +17,14 @@ import secrets
 
 from src.models import AuthAccount, UserAccount, AccountPermission, FileContent, PermissionsRequest, db
 
+def create_password(password_string):
+    """Encrypts a password string
+
+    Keyword Arguements:
+    password_string = string value representing the password that needs to be encrypted
+
+    Return: string
+    """
+
+    return sha256_crypt.encrypt(password_string)
+
