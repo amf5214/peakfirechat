@@ -5,3 +5,5 @@ from src.authentication import *
 from src.image_handling import *
 from src.models import AuthAccount, UserAccount, db
 
+Permission_values = ["Admin", "Edit_Pages", "Add_Pages"]
+
