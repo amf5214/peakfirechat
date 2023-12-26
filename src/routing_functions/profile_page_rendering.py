@@ -106,3 +106,34 @@ class ProfilePageRendering():
         response.set_cookie("token", "None")
         return response
 
+    def create_new_account():
+        """View function that handles the creation of a new account
+
+        Function creates a new user account using post request in the form of an html form submission
+
+        Return: Redirect to either the home path or to the sign in page
+
+        """
+
+        if request.form["logname"]=="No Account":
+            return render_template('signinup.html', signupmessage="Name entry is invalid", useraccount=get_account(request))
+
+        password = create_password(request.form["logpass"])
+        token_data = encode_auth_token(str(request.form["logusername"]))
+        auth_account = AuthAccount(email_account=request.form["logemail"],hash_password=password, auth_token=token_data[0], token_key=token_data[1])
+
+        db.session.add(auth_account)
+
+        db.session.commit()
+
+        authaccountrec = db.session.execute(db.select(AuthAccount).filter_by(email_account=request.form["logemail"])).scalar_one()
+        try:   
+            birthdatedata=birthdate=request.form["logbirthdate"].split("-")
+            birthdate = date(int(birthdatedata[0]), int(birthdatedata[1]), int(birthdatedata[2]))
+            account = UserAccount(username=request.form["logusername"],full_name=request.form["logname"],birthdate=birthdate,auth_account_id=authaccountrec.id)
+        except ValueError:
+                    account = UserAccount(username=request.form["logusername"],full_name=request.form["logname"],auth_account_id=authaccountrec.id)
+        db.session.add(account)
+        db.session.commit()
+        return redirect('/signin/home')
+
