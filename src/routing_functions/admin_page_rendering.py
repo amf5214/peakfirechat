@@ -30,3 +30,9 @@ class AdminPageRendering():
         db.session.commit()
         return redirect('/permissions/requests/admin')
 
+    def uploadnewimage():
+        if not check_if_admin(request):
+            return redirect('/')
+        image_id = uploadimage(request)
+        return redirect('/')
+
