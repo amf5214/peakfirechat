@@ -132,3 +132,29 @@ def check_if_admin(request):
     if account.full_name != "No Account":
         return permission_validation("Admin", account.id)
     
+def encode_auth_token(email_account):
+        """Generates the Auth Token
+
+        Utilizes a secret to generate a jwt token and returns it
+
+        Keyword Arguements:
+        email_account -- user account email address
+
+        Return: tuple of (encoded_token, secret_key)
+        """
+        secret_key = secrets.token_hex(30)
+
+        try:
+            payload = {
+                'exp': datetime.now(timezone.utc) + timedelta(hours=2, seconds=0),
+                'iat': datetime.now(timezone.utc),
+                'sub': email_account
+            }
+            return (jwt.encode(
+                payload,
+                secret_key,
+                algorithm='HS256'
+            ), secret_key)
+        except Exception as e:
+            return e
+        
