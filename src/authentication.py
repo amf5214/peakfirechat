@@ -28,3 +28,15 @@ def create_password(password_string):
 
     return sha256_crypt.encrypt(password_string)
 
+def validate_password(given_pass, real_pass):
+    """Valides user password by verifying that the crypt string equates to the provided unencrypted password
+    
+    Keyword Arguements:
+    given_pass = unencrypted password string
+    real_pass = crypt string that is being compared to 
+
+    Return: boolean
+    """
+
+    return sha256_crypt.verify(given_pass, real_pass)
+
