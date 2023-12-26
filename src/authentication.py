@@ -204,3 +204,17 @@ def check_if_editor(request):
     if account.full_name != "No Account":
         return permission_validation("Edit_Pages", account.id)
     
+def check_if_canadd(request):
+    """Validates user page add permissions
+
+    Takes in an http request and uses it to access the user auth token to see if the user has page add permissions
+
+    Keyword Arguements:
+    request -- http request containing a cookie named token which contains an authentication token
+
+    Return: boolean
+    """
+
+    account = get_account(request)
+    if account.full_name != "No Account":
+        return permission_validation("Add_Pages", account.id)
