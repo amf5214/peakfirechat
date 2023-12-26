@@ -54,3 +54,31 @@ def render_picture(data):
     render_pic = base64.b64encode(data).decode('ascii') 
     return render_pic
 
+def uploadimage(request):
+    """Function used to upload new image files to the database
+
+    Accepts a post request in the form of an html form submission. It is important that the form has
+    enctype="multipart/form-data" activated so that you can access the files attribute. There should be
+    a file input with the name "file" which is what will be accessed
+    
+    Keyword Arguements:
+    request -- http post request from an html form submission
+
+    Return: int representing the image id from the FileContent table
+
+    """
+    
+    file = request.files['file']
+    if file.filename == '':
+        return None
+    if file:
+        data = file.read()
+        render_file = render_picture(data)
+        filename = secure_filename(file.filename)
+        pic_name = str(uuid.uuid1()) + "_" + filename
+        location = file.filename.split(".")[1]
+
+        newFile = FileContent(name=file.filename, rendered_data=render_file, text=pic_name, location=location)
+        db.session.add(newFile)
+        db.session.commit() 
+        return newFile.id
