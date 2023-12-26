@@ -43,3 +43,9 @@ def get_group_data(group_id):
     user_data = get_users_in_group(group_id)
     return {"users": user_data[0], "messages": get_messages_by_group(group_id), "user_names": user_data[1], "group_id": group_id}
 
+def get_chats_for_user(user_id):
+    subs = get_users_group_subs(user_id)
+    chats = []
+    for x in subs:
+        chats.append(get_group_data(x.group))
+    return chats
