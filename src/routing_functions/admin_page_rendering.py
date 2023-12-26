@@ -13,3 +13,11 @@ class AdminPageRendering():
         requests = PermissionsRequest.query.filter_by(is_visible=True).order_by(PermissionsRequest.id).all()
         return render_template("permissions_request_admin.html", admin_token=True, prequests=requests, useraccount=get_account(request))
 
+    def deny_request(requestid):
+        if not check_if_admin(request):
+            return redirect('/')
+        permission_request = PermissionsRequest.query.get_or_404(requestid)
+        permission_request.is_visible = False
+        db.session.commit()
+        return redirect('/permissions/requests/admin')
+
