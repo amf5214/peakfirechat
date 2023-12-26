@@ -73,4 +73,14 @@ def configure_routing(app):
 
 
 
+    # Routing for profile pages
+    app.add_url_rule('/signin/home', view_func=ProfilePageRendering.signin)
+    app.add_url_rule('/signin/failed', view_func=ProfilePageRendering.failed_signin)
+    app.add_url_rule('/profile', view_func=ProfilePageRendering.profile)
+    app.add_url_rule('/attemptedsignin', methods=['POST'], view_func=ProfilePageRendering.signinattempt)
+    app.add_url_rule('/signout', view_func=ProfilePageRendering.sign_out)
+    app.add_url_rule('/newaccount', methods=['POST'], view_func=ProfilePageRendering.create_new_account)
+    app.add_url_rule('/requestpermission/<permission>/<accountid>', view_func=ProfilePageRendering.create_permission_request)
+    app.add_url_rule('/profileimageupdate', methods=['POST'], view_func=ProfilePageRendering.profileimageupdate)
+    app.add_url_rule('/updateprofileattribute', methods=['POST'], view_func=ProfilePageRendering.updateprofileattribute)
     
